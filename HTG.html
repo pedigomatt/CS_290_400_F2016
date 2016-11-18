@@ -4,7 +4,48 @@
       <title>How to Guide</title>
   </head>
   <body>
-    <h1>This is for the how to guide????</h1>
-    <p>How does this work again?</p>
+    <h1>Watson AlchemyData News API How To - Matt Pedigo CS290 Web Development</h1>
+    <p>This Guide will walk you through the steps and share point out specific points to use the API to filter for desired news stories.</p>
+    <p>AlchemyData News indexes over 250k english news sites every day making the information available for AI scanning. Historical searches can be done back 60days.</p>
+    <p>This guide will skip over the obvious stuff about setting up the API key. The directions for this are fairly obvious,so they will only be mentioned at the beginning.</p>
+      <div>
+        <ol>
+          <li>The first step to getting the AlchemyData News API setup and running is to setup a bluelink account and request an API key.The api should look like this:</li>
+          <br>
+          <div> apikey=070a842a6857de9da66f740d96c636039316fc26 </div>
+          <br>
+
+          <li>The next step is to review the details of the get request. Currently, this API only allows get request but soon it will allow push requests as well.
+              <br>There are several parts to the API request that tells the application what type of news articles you are looking for and what values you want back in response.
+              <br>The AlchemyData News uses a rest API and the following lists out the components to the API request.
+              <br>These different parts are strung together with an '&' symbol.  </li>
+                <ul>
+                  <li>REST API Endpoint: <strong>https://gateway-a.watsonplatform.net/calls/data/GetNews?</strong></li>
+                  <li><strong>apikey=YOUR_APP_APIKEY</strong> (replace YOUR_APP_APIKEY with the actual API key from the bluelink website)</li>
+                  <li><strong>outputMode</strong> - can be either JSON format or XML. Example would be 'outputMode=JSON'</li>
+                  <li><strong>start</strong> - identifies the date and time that you want to start your search from. If wanting to do the previous 24hrs, it would be 'start=now-1d'</li>
+                  <li><strong>end</strong> - identifies the date and time that you want to end your search at. Example would be 'end=now'</li>
+                  <li><strong>count</strong> - identifies the number of articles that are wanted to be returned. Could be an integer with any number of values. </li>
+                  <li><strong>Targeted Searches</strong> - There are 6 different types of search criteria. They can be applied together or seperate.  </li>
+                    <ul>
+                      <li><strong>q.enriched.url.enrichedTitle.taxonomy.taxonomy_.label</strong> - Taxonomy - Specific to a list of titles that are cataloged by the app.Can also be narrowed down to further subsets of different titles.</li>
+                      <li><strong>q.enriched.url.concepts.concept.text</strong> - Concepts - Can be any string value that wants to be searched for.</li>
+                      <li><strong>q.enriched.url.enrichedTitle.keywords.keyword.text</strong> - Keywords - The AlchemyData news app automatically searches out keywords. Will return any articles that have matching keywords.</li>
+                      <li><strong>q.enriched.url.enrichedTitle.entities.entity.text</strong> - Entity - This specifies the 2 strings - a text and a type. This allows for differentiation between 2 different things that may have the same name. </li>
+                      <li><strong>q.enriched.url.enrichedTitle.relations.relation</strong> - Relation - Looks for relationships in articles which allows for more precise searches. Usually includes 2 nouns and a verb. </li>
+                      <li><strong>q.enriched.url.enrichedTitle.docSentiment</strong> - Sentiment - Specifies the mood of the article. Such as happy or angry. Can further refine the search to look for a certain emotion around a specific topic.</li>
+                    </ul>
+                  <li><strong>return</strong> - specifies what type of return values are needed.There are over 250 different types of values that can be returned.Return types are seperated by a comma. Common return types are:</li>
+                    <ul>
+                      <li><strong>enriched.url.title</strong> - Returns the title of the article</li>
+                      <li><strong>enriched.url.entities.entity.text</strong> - Returns a portion of the text in the article</li>
+                      <li><strong>enriched.url.author</strong> - Returns the name of the author</li>
+                      <li><strong>enriched.url.url</strong> - Returns the url to the full article</li>
+                    </ul>
+                  <li><strong>rank</strong> - specifies if the returned values should be ranked based on feedback as high, medium or low</li>
+                  <li><strong>return</strong> - specifies what type of return values are needed.There are over 250 different types of values that can be returned.</li>
+                </ul><br>
+            <li>From here, we can start looking into what we can do with this API. THis API creates a great way to setup webpages that show the latest news related to a specific topic.</li>
+            <a href="https://gateway-a.watsonplatform.net/calls/data/GetNews?apikey=070a842a6857de9da66f740d96c636039316fc27&outputMode=json&start=now-1d&end=now&count=100&q.enriched.url.enrichedTitle.relations.relation=|action.verb.text=acquire,object.entities.entity.type=Company|&return=enriched.url.title">API CALL For aquired companies</a>
   </body>
 </html>
